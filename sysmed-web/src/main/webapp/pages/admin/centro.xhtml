@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:h="http://xmlns.jcp.org/jsf/html"
+                xmlns:f="http://xmlns.jcp.org/jsf/core"
+                xmlns:p="http://primefaces.org/ui"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                template="/WEB-INF/templates/template.xhtml">
+    <ui:define  name="contenido">
+        <h:form prependId="false">
+            <p:growl id="menGen"/>
+            <p:toolbar>
+                <p:toolbarGroup align="left">
+                    <p:outputLabel value="Administración Hospitales y Centros de Salud"/>
+                </p:toolbarGroup>
+                <p:toolbarGroup align="right">
+                    <p:commandButton value="Nuevo" process="@this" actionListener="#{centroBean.resetearFormulario}" 
+                                     update="panGriTipPac datTabTipPac menGen" icon="pi pi-file"/> <!-- PrimeIcons -->
+                    <p:commandButton value="Guardar" process="@this panGriTipPac" actionListener="#{centroBean.guardar}" 
+                                     update="panGriTipPac datTabTipPac menGen" icon="far fa-save"/> <!-- FontAwesome -->
+                    <p:commandButton value="Editar" process="@this" actionListener="#{centroBean.editar}" 
+                                     update="panGriTipPac menGen" icon="far fa-edit"/>
+                    <p:commandButton value="Eliminar" onclick="PF('diaCon').show();" icon="fas fa-trash"/>
+                </p:toolbarGroup>
+            </p:toolbar>
+            <br></br>
+            <p:panelGrid id="panGriTipPac" columns="4" style="width:100%">
+                <p:outputLabel for="txtNomTipPac" value="Sigla:"/>
+                <p:inputText id="txtNomTipPac" value="#{centroBean.centro.siglasCentro}" 
+                             maxlength="25" required="true"/>
+                <p:outputLabel for="txaDesTipPac" value="Nombre:"/>
+                <p:inputTextarea id="txaDesTipPac" value="#{centroBean.centro.nombreCentro}"
+                                 maxlength="300" required="true"
+                                 cols="25" rows="5"/>
+            </p:panelGrid>
+            <br></br>
+            <p:dataTable id="datTabTipPac" value="#{centroBean.listaCentros}" selectionMode="single" 
+                         var="tipPac" rowKey="${tipPac.idCentro}" paginator="true" rows="5"
+                         paginatorPosition="bottom">
+                <f:facet name="header">
+                    <h:outputLabel value="Lista de Hospitales y Centros"/>
+                </f:facet>
+                <p:ajax event="rowSelect" listener="#{centroBean.seleccionarFila}"/>
+                <p:column headerText="Sigla">
+                    <h:outputLabel value="#{tipPac.siglasCentro}"/>
+                </p:column>
+                <p:column headerText="Nombre">
+                    <h:outputLabel value="#{tipPac.nombreCentro}"/>
+                </p:column>
+            </p:dataTable>
+        </h:form>
+    </ui:define>
+    <ui:define name="mensaje"> <!-- Mensajes modales -->
+        <p:confirmDialog widgetVar="diaCon" header="Confirmación Eliminación" 
+                         message="Está seguro de eliminar el registro?">
+            <p:commandButton value="Si" process="@this" actionListener="#{centroBean.eliminar}"
+                             update="datTabTipPac menGen" oncomplete="PF('diaCon').hide();"/>
+            <p:commandButton value="No" process="@this" actionListener="#{centroBean.resetearFormulario}"
+                             update="datTabTipPac" oncomplete="PF('diaCon').hide();"/>
+        </p:confirmDialog>
+    </ui:define>
+
+</ui:composition>
