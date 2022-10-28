@@ -20,8 +20,8 @@
         <payara.password></payara.password>
         <payara.hostname>localhost</payara.hostname>
         <payara.domainName>domain1</payara.domainName>
-        <payara.home>/Users/martosfre/ProgramasSO/payara5203/</payara.home>
-        <payara.domainDir>${payara.home}/glassfish/domains/</payara.domainDir>
+        <payara.home>C:\Users\gyuquilima\Payara_Server</payara.home>        
+        <payara.domainDir>${payara.home}\glassfish\domains\</payara.domainDir>
     </properties>
     
     <dependencies>

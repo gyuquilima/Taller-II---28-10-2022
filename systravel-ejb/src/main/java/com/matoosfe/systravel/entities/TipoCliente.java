@@ -4,9 +4,11 @@
  */
 package com.matoosfe.systravel.entities;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import java.io.Serializable;
 import java.util.List;
 import java.util.Objects;
+import javax.json.bind.annotation.JsonbTransient;
 import javax.persistence.Basic;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -20,6 +22,7 @@ import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
+import javax.xml.bind.annotation.XmlTransient;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -57,7 +60,7 @@ public class TipoCliente implements Serializable {
     @Size(min = 1, max = 300)
     @Column(name = "descripcion_tipcli")
     private String descripcionTipcli;
-
+    @Getter(onMethod_= {@XmlTransient, @JsonbTransient})
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "idTipcli")
     private List<Cliente> clienteList;
 

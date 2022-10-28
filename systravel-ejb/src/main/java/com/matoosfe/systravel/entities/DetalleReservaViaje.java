@@ -65,7 +65,7 @@ public class DetalleReservaViaje implements Serializable {
     private String prescripcionDetrescli;
     
     @ManyToOne
-    @JoinColumn(name = "id_his_cli", referencedColumnName = "id_his_cli")
+    @JoinColumn(name = "id_res_cli", referencedColumnName = "id_res_cli")
     private ReservaViaje reservaViaje;
 
 
